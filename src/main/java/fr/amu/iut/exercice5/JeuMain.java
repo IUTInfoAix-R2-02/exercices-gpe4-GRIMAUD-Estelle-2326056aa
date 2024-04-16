@@ -56,13 +56,29 @@ public class JeuMain extends Application {
                 case RIGHT:
                     j1.deplacerADroite(scene.getWidth());
                     break;
-                case Z:
-                    //j2...... vers le haut;
+                case DOWN:
+                    j1.deplacerEnBas(scene.getHeight());
                     break;
-
+                case UP:
+                    j1.deplacerEnHaut();
+                    break;
+                case Q:
+                    j2.deplacerAGauche();
+                    break;
+                case D:
+                    j2.deplacerADroite(scene.getWidth());
+                    break;
+                case S:
+                    j2.deplacerEnBas(scene.getHeight());
+                    break;
+                case Z:
+                    j2.deplacerEnHaut();
+                    break;
             }
-            if (j1.estEnCollision(j2))
+            if (j1.estEnCollision(j2)){
                 System.out.println("Collision....");
+                System.exit(0);
+            }
         });
     }
 

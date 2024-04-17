@@ -94,13 +94,13 @@ public class JeuMain extends Application {
                 System.out.println("Collision....");
                 System.exit(0);
             }
-            if (j1.estEnCollisionAvecMur(o)){
+            if (j1.estEnCollisionAvecObstacle(o)){
                 j1.relocate(j1X, j1Y);
-                System.out.println("Paf dans le mur....");
+                System.out.println("Collision avec un obstacle....");
             }
-            if (j2.estEnCollisionAvecMur(o)){
+            if (j2.estEnCollisionAvecObstacle(o)){
                 j2.relocate(j2X, j2Y);
-                System.out.println("Paf dans le mur....");
+                System.out.println("Collision avec un obstacle....");
             }
         });
     }

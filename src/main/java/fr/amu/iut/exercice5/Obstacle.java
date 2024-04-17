@@ -8,6 +8,7 @@ import javafx.stage.Stage;
 public class Obstacle extends Rectangle {
 
     public Obstacle(){
-        
+
+
     }
 }

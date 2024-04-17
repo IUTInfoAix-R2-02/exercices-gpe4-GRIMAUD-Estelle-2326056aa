@@ -83,4 +83,8 @@ class Personnage extends Group {
                 || autrePersonnage.getBoundsInParent().contains(getBoundsInParent());
     }
 
+    boolean estEnCollisionAvecMur(Obstacle obstacle) {
+        return getBoundsInParent().contains(obstacle.getBoundsInParent())
+                || obstacle.getBoundsInParent().contains(getBoundsInParent());
+    }
 }

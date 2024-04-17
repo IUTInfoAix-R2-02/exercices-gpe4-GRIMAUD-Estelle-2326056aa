@@ -5,6 +5,7 @@ import javafx.scene.Scene;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
 public class JeuMain extends Application {
@@ -20,19 +21,27 @@ public class JeuMain extends Application {
         //Acteurs du jeu
         Personnage pacman = new Pacman();
         Personnage fantome = new Fantome();
-        // on positionne le fantôme 20 positions vers la droite
-        fantome.setLayoutX(20 * 10);
+        Obstacle obstacle = new Obstacle();
+        // on positionne le fantôme à l'extrémité du jeu
+        fantome.setLayoutX(640-20);
+        fantome.setLayoutY(480-20);
+        // on configure le rectangle
+        obstacle.setX(60);
+        obstacle.setY(60);
+        obstacle.setWidth(200);
+        obstacle.setHeight(100);
         //panneau du jeu
         Pane jeu = new Pane();
         jeu.setPrefSize(640, 480);
         jeu.getChildren().add(pacman);
         jeu.getChildren().add(fantome);
+        jeu.getChildren().add(obstacle);
         root.setCenter(jeu);
         //on construit une scene 640 * 480 pixels
         scene = new Scene(root);
 
         //Gestion du déplacement du personnage
-        deplacer(pacman, fantome);
+        deplacer(pacman, fantome, obstacle);
 
         primaryStage.setTitle("... Pac Man ...");
 
@@ -47,8 +56,14 @@ public class JeuMain extends Application {
      * @param j1
      * @param j2
      */
-    private void deplacer(Personnage j1, Personnage j2) {
+    private void deplacer(Personnage j1, Personnage j2, Obstacle o) {
         scene.setOnKeyPressed((KeyEvent event) -> {
+            // récupération position j1 avant mouvement
+            double j1X = j1.getLayoutX();
+            double j1Y = j1.getLayoutY();
+            // récupération position j2 avant mouvement
+            double j2X = j2.getLayoutX();
+            double j2Y = j2.getLayoutY();
             switch (event.getCode()) {
                 case LEFT:
                     j1.deplacerAGauche();
@@ -78,6 +93,14 @@ public class JeuMain extends Application {
             if (j1.estEnCollision(j2)){
                 System.out.println("Collision....");
                 System.exit(0);
+            }
+            if (j1.estEnCollisionAvecMur(o)){
+                j1.relocate(j1X, j1Y);
+                System.out.println("Paf dans le mur....");
+            }
+            if (j2.estEnCollisionAvecMur(o)){
+                j2.relocate(j2X, j2Y);
+                System.out.println("Paf dans le mur....");
             }
         });
     }

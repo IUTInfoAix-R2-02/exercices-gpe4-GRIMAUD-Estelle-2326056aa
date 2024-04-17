@@ -8,20 +8,27 @@ import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
+import java.util.Timer;
+
 public class JeuMain extends Application {
 
     private Scene scene;
     private BorderPane root;
 
+    // ajout d'un timer
+    private long startTimer = System.currentTimeMillis();
+    private long endTimer = startTimer + 20 * 1000;
+
     @Override
     public void start(Stage primaryStage) {
 
         root = new BorderPane();
-
         //Acteurs du jeu
         Personnage pacman = new Pacman();
         Personnage fantome = new Fantome();
         Obstacle obstacle = new Obstacle();
+        // on configure un timer
+        Timer tm = new Timer();
         // on positionne le fantôme à l'extrémité du jeu
         fantome.setLayoutX(640-20);
         fantome.setLayoutY(480-20);
@@ -58,6 +65,10 @@ public class JeuMain extends Application {
      */
     private void deplacer(Personnage j1, Personnage j2, Obstacle o) {
         scene.setOnKeyPressed((KeyEvent event) -> {
+            if (System.currentTimeMillis() > endTimer){
+                System.out.println("Fin du jeu");
+                System.exit(0);
+            }
             // récupération position j1 avant mouvement
             double j1X = j1.getLayoutX();
             double j1Y = j1.getLayoutY();

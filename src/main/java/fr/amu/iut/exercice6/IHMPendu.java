@@ -36,6 +36,12 @@ public class IHMPendu extends Application {
         label.setText("Nombre de vies : " + nbVies);
         vbox.getChildren().add(label);
 
+        // Mot
+        /* Dico dico = new Dico();
+        String mot = dico.getMot();
+        vbox.getChildren().add(mot);
+        */
+
         // Alphabet
         GridPane alphabet = new GridPane();
         alphabet.setAlignment(Pos.CENTER);

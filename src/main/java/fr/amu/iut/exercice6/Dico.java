@@ -6,7 +6,7 @@ import java.util.Random;
 
 public class Dico {
 
-    private final ArrayList<String> listeMots;
+    private static ArrayList<String> listeMots;
 
     public Dico() {
         listeMots = new ArrayList<>();
@@ -23,7 +23,7 @@ public class Dico {
             System.err.println("Erreur de lecture du fichier : " + e.getMessage());
         }
     }
-    public String getMot() {
+    public static String getMot() {
         Random random = new Random();
         int numMotChoisi = random.nextInt(listeMots.size());
         return listeMots.get(numMotChoisi);

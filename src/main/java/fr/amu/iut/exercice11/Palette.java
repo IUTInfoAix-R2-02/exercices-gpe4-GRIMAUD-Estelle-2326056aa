@@ -1,6 +1,8 @@
 package fr.amu.iut.exercice1;
 
 import javafx.application.Application;
+import javafx.beans.binding.Bindings;
+import javafx.beans.property.*;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -21,18 +23,43 @@ public class Palette extends Application {
     private int nbRouge = 0;
     private int nbBleu = 0;
 
+    private IntegerProperty nbFois;
+
     private Label texteDuHaut;
+    private StringProperty message;
 
     private Button vert;
     private Button rouge;
     private Button bleu;
 
     private BorderPane root;
+
     private Pane panneau;
+    private StringProperty couleurPanneau;
     private HBox boutons;
 
     private Label texteDuBas;
 
+    public Palette(){
+        nbFois = new SimpleIntegerProperty();
+        message = new SimpleStringProperty();
+        couleurPanneau = new SimpleStringProperty("#000000");
+    }
+
+    private void createBindings() {
+
+        BooleanProperty pasEncoreDeClic = new SimpleBooleanProperty(true);
+        pasEncoreDeClic.bind(Bindings.equal(nbFois, 0));
+
+        texteDuHaut.textProperty().bind(Bindings.when(pasEncoreDeClic)
+                .then("Aucun clic détecté")
+                .otherwise(Bindings.format("Total des clics : %d", nbFois)));
+
+        panneau.styleProperty().bind(Bindings.createStringBinding(
+                () -> String.format("-fx-background-color: %s;", couleurPanneau.get()),
+                couleurPanneau
+        ));
+    }
 
     @Override
     public void start(Stage primaryStage) {
@@ -54,8 +81,28 @@ public class Palette extends Application {
         bas.getChildren().addAll(boutons, texteDuBas);
 
         vert = new Button("Vert");
+        vert.setOnAction(event -> {
+            this.nbVert += 1;
+            nbFois.set(nbFois.get() + 1);
+            couleurPanneau.set("green");
+            //this.panneau.setStyle("-fx-background-color: green");
+        });
         rouge = new Button("Rouge");
+        rouge.setOnAction(event -> {
+            this.nbRouge += 1;
+            nbFois.set(nbFois.get() + 1);
+            couleurPanneau.set("red");
+            //this.panneau.setStyle("-fx-background-color: red");
+        });
         bleu = new Button("Bleu");
+        bleu.setOnAction(event -> {
+            this.nbBleu += 1;
+            nbFois.set(nbFois.get() + 1);
+            couleurPanneau.set("blue");
+            //this.panneau.setStyle("-fx-background-color: blue");
+        });
+
+        createBindings();
 
         /* VOTRE CODE ICI */
 
@@ -69,6 +116,7 @@ public class Palette extends Application {
 
         primaryStage.setScene(scene);
         primaryStage.show();
+
     }
 }
 

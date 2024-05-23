@@ -42,7 +42,7 @@ public class Palette extends Application {
 
     public Palette(){
         nbFois = new SimpleIntegerProperty();
-        message = new SimpleStringProperty();
+        message = new SimpleStringProperty("");
         couleurPanneau = new SimpleStringProperty("#000000");
     }
 
@@ -59,6 +59,30 @@ public class Palette extends Application {
                 () -> String.format("-fx-background-color: %s;", couleurPanneau.get()),
                 couleurPanneau
         ));
+
+        texteDuBas.textProperty().bind(message);
+
+        texteDuBas.styleProperty().bind(Bindings.createStringBinding(
+                () -> String.format("-fx-text-fill: %s;", couleurPanneau.get()),
+                couleurPanneau
+        ));
+
+        couleurPanneau.addListener((obs, oldVal, newVal) -> {
+            switch (newVal) {
+                case "#00FF00":
+                    message.set("Le Vert est une jolie couleur !");
+                    break;
+                case "#FF0000":
+                    message.set("Le Rouge est une jolie couleur !");
+                    break;
+                case "#0000FF":
+                    message.set("Le Bleu est une jolie couleur !");
+                    break;
+                default:
+                    message.set("");
+                    break;
+            }
+        });
     }
 
     @Override

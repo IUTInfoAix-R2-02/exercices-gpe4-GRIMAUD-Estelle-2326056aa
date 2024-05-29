@@ -69,13 +69,13 @@ public class Palette extends Application {
 
         couleurPanneau.addListener((obs, oldVal, newVal) -> {
             switch (newVal) {
-                case "#00FF00":
+                case "green":
                     message.set("Le Vert est une jolie couleur !");
                     break;
-                case "#FF0000":
+                case "red":
                     message.set("Le Rouge est une jolie couleur !");
                     break;
-                case "#0000FF":
+                case "blue":
                     message.set("Le Bleu est une jolie couleur !");
                     break;
                 default:
